@@ -60,3 +60,9 @@
   </div>
 </div>
 <%= javascript_pack_tag 'video' %>
+
+
+<%= form_tag import_videos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "csvインポート" %>
+<% end %>
