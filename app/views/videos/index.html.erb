@@ -1,49 +1,68 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Videos</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Tag</th>
-      <th>View</th>
-      <th>Video url</th>
-      <th>Order</th>
-      <th>Queriy</th>
-      <th>Video length</th>
-      <th>Like</th>
-      <th>Dislike</th>
-      <th>Channel url</th>
-      <th>Create stamp</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="container js-videosIndex">
+  <h1 class="#f3e5f5 purple lighten-5 center">index</h1>
+  <div class="row #e3f2fd blue lighten-5">
     <% @videos.each do |video| %>
-      <tr>
-        <td><%= video.title %></td>
-        <td><%= video.description %></td>
-        <td><%= video.tag %></td>
-        <td><%= video.view %></td>
-        <td><%= video.video_url %></td>
-        <td><%= video.order %></td>
-        <td><%= video.queriy %></td>
-        <td><%= video.video_length %></td>
-        <td><%= video.like %></td>
-        <td><%= video.dislike %></td>
-        <td><%= video.channel_url %></td>
-        <td><%= video.create_stamp %></td>
-        <td><%= link_to 'Show', video %></td>
-        <td><%= link_to 'Edit', edit_video_path(video) %></td>
-        <td><%= link_to 'Destroy', video, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="col s4 m6">
+        <div class="card btn">
+          <span class="card-title" v-on:click="setVideoInfo(<%= video.id %>)">
+            <%= video.title %>
+          </span>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <div class="row" v-show="videoInfoBool">
+    <div class="col s12 m12">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">
+            {{ videoInfo.title }}
+          </span>
+          <div class="detail">
+            {{ videoInfo.description }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.publisher }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.tag }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.view }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.video_url }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.order }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.queriy }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.video_length }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.like }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.dislike }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.channel_url }}
+          </div>
+          <div class="detail">
+            {{ videoInfo.create_stamp }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_pack_tag 'video' %>
 
-<br>
 
-<%= link_to 'New Video', new_video_path %>
+<%= form_tag import_videos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "csvインポート" %>
+<% end %>
