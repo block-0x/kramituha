@@ -31,5 +31,10 @@ group :test do
 end
 
 # add gem
+# Login
 gem 'devise'
+# CSV
 gem 'roo'
+# Design
+gem 'materialize-sass', '~> 1.0'
+gem 'material_icons'
