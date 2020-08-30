@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :videos
-  root to: 'home#index'
+  root to: 'videos#index'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
