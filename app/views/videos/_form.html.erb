@@ -1,0 +1,77 @@
+<%= form_with(model: video, local: true) do |form| %>
+  <% if video.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(video.errors.count, "error") %> prohibited this video from being saved:</h2>
+
+      <ul>
+        <% video.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tag %>
+    <%= form.text_area :tag %>
+  </div>
+
+  <div class="field">
+    <%= form.label :view %>
+    <%= form.number_field :view %>
+  </div>
+
+  <div class="field">
+    <%= form.label :video_url %>
+    <%= form.text_field :video_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :order %>
+    <%= form.number_field :order %>
+  </div>
+
+  <div class="field">
+    <%= form.label :queriy %>
+    <%= form.text_field :queriy %>
+  </div>
+
+  <div class="field">
+    <%= form.label :video_length %>
+    <%= form.number_field :video_length %>
+  </div>
+
+  <div class="field">
+    <%= form.label :like %>
+    <%= form.number_field :like %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dislike %>
+    <%= form.number_field :dislike %>
+  </div>
+
+  <div class="field">
+    <%= form.label :channel_url %>
+    <%= form.text_field :channel_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :create_stamp %>
+    <%= form.text_field :create_stamp %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
