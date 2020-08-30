@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
+  namespace :api do
+    resources :books, only: [:show]
+  end
 end
