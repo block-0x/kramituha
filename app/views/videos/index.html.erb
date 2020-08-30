@@ -1,22 +1,64 @@
-<div class="container js-videosIndex">
-  <h1 class="center">Videos</h1>
-<%= form_tag import_videos_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "csvインポート" %>
-<% end %>
-
-  <div class="row">
-    <% @videos.each do |video| %>
-      <div class="col s4 m6">
-        <div class="card btn">
-          <span class="material-icons" v-on:click="setVideoInfo(<%= video.id %>)">
-            <%= video.title %>
-            <%#= video.view %>
-          </span>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<div id="app">
+  <v-app>
+    <v-container>
+      <h2>Videos</h2>
+      <%# テーブル作成用コンポーネント %>
+      <v-data-table
+        :headers="headers"
+        :items="items"
+        :items-per-page="itemsPerPage"
+        hide-default-footer
+      />
+    </v-container>
+    <%# ページネーション表示用コンポーネント %>
+    <v-pagination
+      v-model="currentPage"
+      :length="totalPages"
+      <%# ページを変更した時にfetchVideosを呼び出す %>
+      @input="fetchVideos"
+    />
+  </v-ap>
 </div>
 
-<%= javascript_pack_tag 'video' %>
+<script>
+  new Vue({
+    el: "#app",
+    vuetify: new Vuetify(),
+    data() {
+      return {
+        // テーブルのヘッダー情報。valueの値がレコードのフィールド名に紐付く
+        headers: [
+          { text: "views", value: "view"},
+          { text: "url", value: "video_url"},
+          { text: "title", value: "title"},
+        ],
+        // テーブルのボディー情報。apiで取得したBook一覧をここに格納する
+        items: [],
+        // 表示するページの番号
+        currentPage: 1,
+        // １ページあたりの表示件数
+        itemsPerPage: 500,
+        // ページネーションした時の全ページ数
+        totalPages: 10,
+      }
+    },
+    methods: {
+      // AxiosでVideo取得apiにリクエストを送る
+      fetchVideos() {
+        const url = `/api/videos?page=${this.currentPage}?per=${this.itemsPerPage}`;
+        axios
+          .get(url)
+          .then(res => {
+            // Videos一覧を取得
+            this.items = res.data.videos;
+            // ページネーションした時の全ページ数を取得
+            this.totalPages = res.data.total_pages;
+        })
+      }
+    },
+    // DOMが作成された時に fetchVideos を呼び出す
+    created() {
+      this.fetchVideos()
+    },
+  });
+</script>
