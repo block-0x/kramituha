@@ -32,3 +32,4 @@ end
 
 # add gem
 gem 'devise'
+gem 'roo'
