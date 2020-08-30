@@ -38,3 +38,5 @@ gem 'roo'
 # Design
 gem 'materialize-sass', '~> 1.0'
 gem 'material_icons'
+# Pagination
+gem 'kaminari'

@@ -2,7 +2,7 @@ class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update, :destroy]
 
   def index
-    @videos = Video.all
+    # @videos = Video.all
   end
 
   def show
