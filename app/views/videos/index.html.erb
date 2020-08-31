@@ -9,21 +9,17 @@
 <script type="text/javascript" src="https://unpkg.com/vue-good-table/dist/vue-good-table.min.js"></script>
 
 <div id="app">
-<template>
-  <div>
+  <template>
     <vue-good-table
       :columns="columns"
-      :rows="rows"/>
-  </div>
-</template>
-    <%# ページネーション表示用コンポーネント %>
-<v-pagination
-  v-model="currentPage"
-  :length="totalPages"
-  <%# ページを変更した時にfetchVideosを呼び出す %>
-  @input="fetchVideos"
-/>
+      :rows="rows"
+      :search-options="{
+        enabled: true
+      }">
+    </vue-good-table>
+  </template>
 </div>
+
 <script>
   new Vue({
     el: "#app",
@@ -39,7 +35,7 @@
         {
           label: 'URL',
           field: 'video_url',
-          width: '100px',
+          width: '200px',
         },
         {
           label: 'title',
@@ -52,24 +48,16 @@
         },
       ],
       rows: [],
-        currentPage: 1,
-        itemsPerPage: 20,
-        totalPages: null,
       }
     },
     methods: {
-      clickRow (row) {
-        console.log('clickRow', row)
-        alert('Hello ' + this.items + '!')
-      },
       fetchVideos() {
-        const url = `/api/videos?page=${this.currentPage}?per=${this.itemsPerPage}`;
+        const url = `/api/videos`;
         axios
           .get(url)
           .then(res => {
             this.rows = res.data.videos;
-            this.totalPages = res.data.total_pages;
-        })
+          })
       }
     },
     created() {
