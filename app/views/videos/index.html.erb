@@ -13,6 +13,15 @@
     <vue-good-table
       :columns="columns"
       :rows="rows"
+      :pagination-options="{
+        enabled: true,
+        nextLabel: 'next',
+        prevLabel: 'prev',
+        rowsPerPageLabel: 'Rows per page',
+        ofLabel: 'of',
+        pageLabel: 'page', // for 'pages' mode
+        allLabel: 'All',
+      }"
       :search-options="{
         enabled: true,
         externalQuery: searchTerm
