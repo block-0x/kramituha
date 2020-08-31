@@ -4,7 +4,7 @@ class Api::VideosController < ApplicationController
   	# 表示するページの番号を指定
     page = params[:page] || 1
     # １ページあたりの表示件数を指定
-    per = params[:per] || 500
+    per = params[:per] || 20
     # ページネーションで指定レコードを取得
     videos = Video.all.page(page).per(per)
     # ページネーションした時の全ページ数
@@ -12,7 +12,7 @@ class Api::VideosController < ApplicationController
     # レスポンスデータの定義
     response = {
       # videoレコード
-      videos: videos.select(:view, :title, :video_url),
+      videos: videos.select(:view, :title, :video_url, :order),
       total_pages: total_pages
     }
     # json形式でレスポンスを返却

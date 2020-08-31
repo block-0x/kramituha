@@ -4,77 +4,77 @@
   <%= file_field_tag :file %>
   <%= submit_tag "csvインポート" %>
 <% end %>
-<div id="app">
-  <v-app>
-    <v-container>
-      <h2>Videos</h2>
-      <%# テーブル作成用コンポーネント %>
-      <v-data-table
-                :headers="headers"
-                :items="items"
-              >
-    <template v-slot:item.uri="{ item }">
-                  <a
-                    :href="'https://hoge.jp/' + item.uri"
-                    target="_blank"
-                    >hoge.jp/{{ item.uri }}</a
-                  >
-                </template>
-    </v-container>
-    <%# ページネーション表示用コンポーネント %>
-    <v-pagination
-      v-model="currentPage"
-      :length="totalPages"
-      <%# ページを変更した時にfetchVideosを呼び出す %>
-      @input="fetchVideos"
-    />
-  </v-ap>
-</div>
 
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/vue-good-table/dist/vue-good-table.min.css">
+<script type="text/javascript" src="https://unpkg.com/vue-good-table/dist/vue-good-table.min.js"></script>
+
+<div id="app">
+<template>
+  <div>
+    <vue-good-table
+      :columns="columns"
+      :rows="rows"/>
+  </div>
+</template>
+    <%# ページネーション表示用コンポーネント %>
+<v-pagination
+  v-model="currentPage"
+  :length="totalPages"
+  <%# ページを変更した時にfetchVideosを呼び出す %>
+  @input="fetchVideos"
+/>
+</div>
 <script>
   new Vue({
     el: "#app",
     vuetify: new Vuetify(),
     data() {
       return {
-        // テーブルのヘッダー情報。valueの値がレコードのフィールド名に紐付く
-        headers: [
-          { text: "views", value: "view"},
-          { text: 'URL', align: 'center', sortable: false, value: 'video_url' },
-          // { text: "url", value: "video_url"},
-          { text: "title", value: "title"},
-        ],
-        // テーブルのボディー情報。apiで取得したvideo一覧をここに格納する
-        items: [],
-        // 表示するページの番号
+        columns: [
+        {
+          label: 'views',
+          field: 'view',
+          type: 'number',
+        },
+        {
+          label: 'URL',
+          field: 'video_url',
+          width: '100px',
+        },
+        {
+          label: 'title',
+          field: 'title',
+        },
+        {
+          label: 'order',
+          field: 'order',
+          type: 'number',
+        },
+      ],
+      rows: [],
         currentPage: 1,
-        // １ページあたりの表示件数
-        itemsPerPage: 500,
-        // ページネーションした時の全ページ数
+        itemsPerPage: 20,
         totalPages: null,
       }
     },
     methods: {
-      // AxiosでVideo取得apiにリクエストを送る
-      // clickRow (row) {
-      //   console.log('clickRow', row)
-      //   alert('Hello ' + this.items + '!')
-      // },
+      clickRow (row) {
+        console.log('clickRow', row)
+        alert('Hello ' + this.items + '!')
+      },
       fetchVideos() {
         const url = `/api/videos?page=${this.currentPage}?per=${this.itemsPerPage}`;
         axios
           .get(url)
           .then(res => {
-            // Videos一覧を取得
-            this.items = res.data.videos;
-            // ページネーションした時の全ページ数を取得
+            this.rows = res.data.videos;
             this.totalPages = res.data.total_pages;
         })
       }
     },
-    // DOMが作成された時に fetchVideos を呼び出す
     created() {
       this.fetchVideos()
     },
   });
 </script>
+
