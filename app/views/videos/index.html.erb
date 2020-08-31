@@ -1,14 +1,25 @@
+<div class="container js-videosIndex">
+  <h1 class="center"></h1>
+<%= form_tag import_videos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "csvインポート" %>
+<% end %>
 <div id="app">
   <v-app>
     <v-container>
       <h2>Videos</h2>
       <%# テーブル作成用コンポーネント %>
       <v-data-table
-        :headers="headers"
-        :items="items"
-        :items-per-page="itemsPerPage"
-        hide-default-footer
-      />
+                :headers="headers"
+                :items="items"
+              >
+    <template v-slot:item.uri="{ item }">
+                  <a
+                    :href="'https://hoge.jp/' + item.uri"
+                    target="_blank"
+                    >hoge.jp/{{ item.uri }}</a
+                  >
+                </template>
     </v-container>
     <%# ページネーション表示用コンポーネント %>
     <v-pagination
@@ -29,21 +40,26 @@
         // テーブルのヘッダー情報。valueの値がレコードのフィールド名に紐付く
         headers: [
           { text: "views", value: "view"},
-          { text: "url", value: "video_url"},
+          { text: 'URL', align: 'center', sortable: false, value: 'video_url' },
+          // { text: "url", value: "video_url"},
           { text: "title", value: "title"},
         ],
-        // テーブルのボディー情報。apiで取得したBook一覧をここに格納する
+        // テーブルのボディー情報。apiで取得したvideo一覧をここに格納する
         items: [],
         // 表示するページの番号
         currentPage: 1,
         // １ページあたりの表示件数
         itemsPerPage: 500,
         // ページネーションした時の全ページ数
-        totalPages: 10,
+        totalPages: null,
       }
     },
     methods: {
       // AxiosでVideo取得apiにリクエストを送る
+      // clickRow (row) {
+      //   console.log('clickRow', row)
+      //   alert('Hello ' + this.items + '!')
+      // },
       fetchVideos() {
         const url = `/api/videos?page=${this.currentPage}?per=${this.itemsPerPage}`;
         axios

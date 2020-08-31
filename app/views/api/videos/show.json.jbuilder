@@ -1,5 +1,10 @@
-json.id        @video.id
+json.view        @video.view
 json.title     @video.title
-json.author    @video.author
-json.publisher @video.publisher
-json.genre     @video.genre
+json.description    @video.description
+json.tag @video.tag
+json.order     @video.order
+json.queriy     @video.queriy
+json.video_length     @video.video_length
+json.like     @video.like
+json.dislike     @video.dislike
+json.create_stamp     @video.create_stamp

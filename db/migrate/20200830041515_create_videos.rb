@@ -4,13 +4,13 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.string :title
       t.text :description
       t.text :tag
-      t.string :view
+      t.bigint :view
       t.string :video_url
       t.integer :order
       t.string :queriy
       t.string :video_length
-      t.string :like
-      t.string :dislike
+      t.integer :like
+      t.integer :dislike
       t.string :channel_url
       t.string :create_stamp
 

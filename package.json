@@ -10,6 +10,7 @@
     "material-design-icons": "^3.0.1",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.12",
+    "vue-good-table": "^2.21.0",
     "vue-loader": "^15.9.3",
     "vue-material": "^1.0.0-beta-15",
     "vue-template-compiler": "^2.6.12",

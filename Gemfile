@@ -30,7 +30,6 @@ group :test do
   gem 'webdrivers'
 end
 
-# add gem
 # Login
 gem 'devise'
 # CSV
